@@ -17,18 +17,18 @@ jobs:
 
       - name: Setup ENV's
         env:
-          MAILHOST: ${{ vars.MAILHOST }}
-          MAILPORT: ${{ vars.MAILPORT }}
-          MAILUSER: ${{ vars.MAILUSER }}
-          MAILPASS: ${{ vars.MAILPASS }}
-          CONTACTMAIL: ${{ vars.CONTACTMAIL }}
-          NOREPLY: ${{ vars.NOREPLY }}
-          STRAPI_URL: ${{ vars.STRAPI_URL }}
-          BETTERUPTIMETOKEN: ${{vars.BETTERUPTIMETOKEN}}
-          BETTERUPTIMEPAGES: ${{vars.BETTERUPTIMEPAGES}}
-          NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
+          MAILHOST: ${{ secrets.MAILHOST }}
+          MAILPORT: ${{ secrets.MAILPORT }}
+          MAILUSER: ${{ secrets.MAILUSER }}
+          MAILPASS: ${{ secrets.MAILPASS }}
+          CONTACTMAIL: ${{ secrets.CONTACTMAIL }}
+          NOREPLY: ${{ secrets.NOREPLY }}
+          STRAPI_URL: ${{ secrets.STRAPI_URL }}
+          BETTERUPTIMETOKEN: ${{secrets.BETTERUPTIMETOKEN}}
+          BETTERUPTIMEPAGES: ${{secrets.BETTERUPTIMEPAGES}}
+          NUXT_PUBLIC_SITE_URL: ${{ secrets.NUXT_PUBLIC_SITE_URL }}
           run: ls -al
-          
+
       - name: NPM Install
         run: npm i
 
