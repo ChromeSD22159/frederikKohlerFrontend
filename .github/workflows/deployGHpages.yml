@@ -26,10 +26,10 @@ jobs:
           MAILPASS: ${{ secrets.MAILPASS }}
           CONTACTMAIL: ${{ secrets.CONTACTMAIL }}
           NOREPLY: ${{ secrets.NOREPLY }}
-          STRAPI_URL: ${{ secrets.STRAPI_URL }}
+          STRAPI_URL: ${{ vars.STRAPI_URL }}
           BETTERUPTIMETOKEN: ${{secrets.BETTERUPTIMETOKEN}}
           BETTERUPTIMEPAGES: ${{secrets.BETTERUPTIMEPAGES}}
-          NUXT_PUBLIC_SITE_URL: 'https://chromesd22159.github.io/frederikKohlerFrontend/'
+          NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
         run: |
           echo "Token: ${{ secrets.ACCESS_TOKEN }} " 
 
