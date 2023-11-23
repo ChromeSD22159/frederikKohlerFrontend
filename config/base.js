@@ -12,7 +12,6 @@ export const modules = [
 export const app = {
   pageTransition: { name: 'page', mode: 'out-in' },
   layoutTransition: { name: 'layout', mode: 'out-in' },
-  baseURL: process.env.BASEURL
 }
 
 export const plugins = [

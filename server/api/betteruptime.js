@@ -6,5 +6,4 @@ export default defineEventHandler(async (event) => {
             Authorization: `Bearer ${config.betterUptimeToken}`
         },
     })
-
 })

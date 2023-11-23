@@ -2,7 +2,7 @@ name: Deploy Code to Release Branch
 on:
   push:
     branches:
-      - main
+      - test
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
           BETTERUPTIMETOKEN: ${{secrets.BETTERUPTIMETOKEN}}
           BETTERUPTIMEPAGES: ${{secrets.BETTERUPTIMEPAGES}}
           NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
-          BASEURL: ${{ vars.BASEURL }}
+          BASEURL: ''
         run: |
           echo "Token: ${{ secrets.ACCESS_TOKEN }} "
           npm install
