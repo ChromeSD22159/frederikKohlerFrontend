@@ -15,10 +15,7 @@ jobs:
         with:
           node-version: 18.18.2
 
-      - name: NPM Install
-        run: npm i
-
-      - name: Nuxt Build
+      - name: Prepare
         env:
           MAILHOST: ${{ secrets.MAILHOST }}
           MAILPORT: ${{ secrets.MAILPORT }}
@@ -31,13 +28,10 @@ jobs:
           BETTERUPTIMEPAGES: ${{secrets.BETTERUPTIMEPAGES}}
           NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
         run: |
-          echo "Token: ${{ secrets.ACCESS_TOKEN }} " 
-
-      - name: Nuxt Build
-        run: npm run build
-
-      - name: Nuxt Generate
-        run: npm run generate
+          echo "Token: ${{ secrets.ACCESS_TOKEN }} "
+          npm install
+          npm run build
+          npm run generate
 
       - name: Deploy to GitHub Pages
         uses: jamesIves/github-pages-deploy-action@v4.3.0
