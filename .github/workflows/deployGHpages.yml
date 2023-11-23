@@ -29,8 +29,12 @@ jobs:
           STRAPI_URL: ${{ secrets.STRAPI_URL }}
           BETTERUPTIMETOKEN: ${{secrets.BETTERUPTIMETOKEN}}
           BETTERUPTIMEPAGES: ${{secrets.BETTERUPTIMEPAGES}}
-          NUXT_PUBLIC_SITE_URL: ${{ secrets.NUXT_PUBLIC_SITE_URL }}
-        run: npm run build
+          NUXT_PUBLIC_SITE_URL: 'https://chromesd22159.github.io/frederikKohlerFrontend/'
+        run: |
+          echo "Token: ${{ secrets.ACCESS_TOKEN }} " 
+
+      - name: Nuxt Build
+        run: npm run built
 
       - name: Nuxt Generate
         run: npm run generate
