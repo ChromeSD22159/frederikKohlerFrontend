@@ -1,0 +1,1 @@
+const n=(e,t)=>i(e)?Object.keys(e).length!==0:!1,i=(e,t)=>e!=null,s=e=>{if(e.value)return{width:e.value.clientWidth,height:e.value.clientHeight}},r=(e,t)=>{if(e&&t)return e>t};export{i as a,n as b,s as g,r as i};
