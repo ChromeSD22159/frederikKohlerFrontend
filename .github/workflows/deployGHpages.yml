@@ -15,7 +15,10 @@ jobs:
         with:
           node-version: 18.18.2
 
-      - name: Setup ENV's
+      - name: NPM Install
+        run: npm i
+
+      - name: Nuxt Build
         env:
           MAILHOST: ${{ secrets.MAILHOST }}
           MAILPORT: ${{ secrets.MAILPORT }}
@@ -27,12 +30,6 @@ jobs:
           BETTERUPTIMETOKEN: ${{secrets.BETTERUPTIMETOKEN}}
           BETTERUPTIMEPAGES: ${{secrets.BETTERUPTIMEPAGES}}
           NUXT_PUBLIC_SITE_URL: ${{ secrets.NUXT_PUBLIC_SITE_URL }}
-          run: ls -al
-
-      - name: NPM Install
-        run: npm i
-
-      - name: Nuxt Build
         run: npm run build
 
       - name: Nuxt Generate
