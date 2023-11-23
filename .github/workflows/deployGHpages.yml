@@ -34,7 +34,7 @@ jobs:
           echo "Token: ${{ secrets.ACCESS_TOKEN }} " 
 
       - name: Nuxt Build
-        run: npm run built
+        run: npm run build
 
       - name: Nuxt Generate
         run: npm run generate
