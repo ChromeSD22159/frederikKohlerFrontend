@@ -27,6 +27,7 @@ jobs:
           BETTERUPTIMETOKEN: ${{secrets.BETTERUPTIMETOKEN}}
           BETTERUPTIMEPAGES: ${{secrets.BETTERUPTIMEPAGES}}
           NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
+          BASEURL: ${{ vars.BASEURL }}
         run: |
           echo "Token: ${{ secrets.ACCESS_TOKEN }} "
           npm install
