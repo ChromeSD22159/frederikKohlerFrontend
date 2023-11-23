@@ -1,0 +1,45 @@
+name: Deploy Code to Release Branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest 
+
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v1
+        with:
+          node-version: 18.18.2
+
+      - name: Setup ENV's
+        env:
+          MAILHOST: ${{ vars.MAILHOST }}
+          MAILPORT: ${{ vars.MAILPORT }}
+          MAILUSER: ${{ vars.MAILUSER }}
+          MAILPASS: ${{ vars.MAILPASS }}
+          CONTACTMAIL: ${{ vars.CONTACTMAIL }}
+          NOREPLY: ${{ vars.NOREPLY }}
+          STRAPI_URL: ${{ vars.STRAPI_URL }}
+          BETTERUPTIMETOKEN: ${{vars.BETTERUPTIMETOKEN}}
+          BETTERUPTIMEPAGES: ${{vars.BETTERUPTIMEPAGES}}
+          NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
+          run: ls -al
+          
+      - name: NPM Install
+        run: npm i
+
+      - name: Nuxt Build
+        run: npm run build
+
+      - name: Nuxt Generate
+        run: npm run generate
+
+      - name: Deploy to GitHub Pages
+        uses: jamesIves/github-pages-deploy-action@v4.3.0
+        with:
+          branch: gh-pages
+          folder: dist
