@@ -5,6 +5,7 @@
             <IconXing v-if="iconName == 'xing'" />
             <IconGithub v-if="iconName == 'github'" />
             <IconMail v-if="iconName == 'mail'" />
+            <IconDownload v-if="iconName == 'download'" />
             <IconPhone v-if="iconName == 'phone'" />
             <IconInstagram v-if="iconName == 'instagram'" />
             <p class="text-white text-xs text-center">{{ link.text }}</p>
@@ -51,6 +52,7 @@ export default {
             case 'xing': return 'xing'
             case 'github': return 'github'
             case 'mail': return 'mail'
+            case 'download': return 'download'
             case 'phone': return 'phone'
             case 'instagram': return 'instagram'
             default: return 'null'

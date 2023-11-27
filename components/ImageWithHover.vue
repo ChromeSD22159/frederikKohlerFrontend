@@ -1,6 +1,13 @@
 <template>
   <div class="roundedImage">
-    <img class="rounded-xl" :src="imageURL" height="auto" :alt="imageAlt" >
+    <img 
+      class="rounded-xl" 
+      :src="imageURL"
+      :alt="imageAlt"
+      width="592"
+      height="462"
+      loading="lazy"
+    >
   </div>
 </template>
 

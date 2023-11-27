@@ -5,9 +5,11 @@ export const runtimeConfig = {
   MAILUSER: process.env.EMAIL_SMTP_USER,
   MAILPASS: process.env.EMAIL_SMTP_PASS,
   CONTACTMAIL: process.env.EMAIL_ADDRESS_FROM,
-  betterUptimeToken: process.env.BETTERUPTIMETOKEN,
+  BETTERUPTIMETOKEN: process.env.BETTERUPTIMETOKEN,
   BETTERUPTIMEPAGES: process.env.BETTERUPTIMEPAGES,
+  APPSTORE_KEY_ID: process.env.APPSTORE_KEY_ID,
+  APPSTORE_ISSUER_ID: process.env.APPSTORE_ISSUER_ID,
   public: {
     strapi: strapi_url,
   }
-};
+}

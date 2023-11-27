@@ -7,12 +7,23 @@
                     <h1 class="text-xl md:text-xl xl:text-3xl line-break fk-colored-text antialiased tracking-wide font-sans"> {{ app.feature.titel }} </h1>
                     <h2 class="text-sm md:text-md xl:text-xl line-break text-gray-500 antialiased tracking-wide font-sans"> {{ app.feature.subtitle }} </h2>
                     <p>{{app.feature.description}}</p>
-                    
-                    <NuxtLink v-if="isNotNullOrUndefined(app.feature.badge.data) && isNotNullOrUndefined(app.feature.appstore)" :to="app.feature.appstore" >
-                            <img :src="buildImageUrl(app.feature.badge.data.attributes.url)" 
-                                :alt="`${app.seo.title} im AppStore`" style="height: 40px" 
+
+                  
+                    <div class="flex flex-row gap-10 items-center">
+                        <NuxtLink v-if="isNotNullOrUndefined(app.feature.badge.data) && isNotNullOrUndefined(app.feature.appstore)" :to="app.feature.appstore" >
+                           <img 
+                                :src="buildImageUrl(app.feature.badge.data.attributes.url)" 
+                                :alt="`${app.seo.title} im AppStore`"
+                                width="120"
+                                height="40"
                             />
-                    </NuxtLink>
+                        </NuxtLink>
+
+                         
+                    
+                        <ButtonAppStore v-if="app.feature.titel.includes(`Country`)" app="Country"/>
+                        <ButtonAppStore v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
+                    </div>
                     
                 </div>
 
@@ -43,7 +54,8 @@
                 <Transition name="bounce" mode="out-in">
                     <NuxtImg 
                     :key="currentImage" 
-                    :src="currentImage" 
+                    :src="currentImage"
+                    loading="lazy"
                     class="image"
                     alt="history screenshot vom iphone"
                     style="max-height: 480px"

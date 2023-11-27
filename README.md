@@ -21,6 +21,7 @@
 - NOREPLY: `email@domain.de`
 - STRAPI_URL: `domain.de`
 - BETTERUPTIMETOKEN: `token`
+- APPSTORETOKEN: `token from the .8p file`
 - BETTERUPTIMEPAGES: `['id', 'id']`
 - DEBUG: `true`
 -- Restart App
