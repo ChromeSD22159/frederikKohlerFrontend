@@ -3,15 +3,19 @@ export const modules = [
   '@nuxtjs/strapi',
   '@nuxt/image',
   'nuxt-simple-sitemap',
-  ['@nuxtjs/robots', { 
-    UserAgent: '*',
-    Allow: '/',
-  }]
 ]
 
 export const app = {
   pageTransition: { name: 'page', mode: 'out-in' },
   layoutTransition: { name: 'layout', mode: 'out-in' },
+  head: {
+    meta: [
+      {
+        name: 'google-site-verification',
+        content: 'ZnoLQA9ujFM6-FRqomSUBlGV0qDMaLc443Z5qLCF-I0',
+      },
+    ],
+  },
 }
 
 export const plugins = [

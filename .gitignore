@@ -22,3 +22,5 @@ logs
 .env
 .env.*
 !.env.example
+
+AuthKey_L698WZ2VD6.p8
