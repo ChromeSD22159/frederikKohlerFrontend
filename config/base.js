@@ -5,7 +5,8 @@ export const modules = [
   'nuxt-simple-sitemap',
   ['@nuxtjs/robots', { 
     UserAgent: '*',
-    Allow: '/',
+    Allow: process.env.NODE_ENV === 'production' ? '/' : '',
+    Disallow: process.env.NODE_ENV === 'development' ? '/' : '',
   }]
 ]
 
