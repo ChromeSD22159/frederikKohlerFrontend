@@ -1,11 +1,9 @@
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
-const now = Math.round(new Date().getTime() / 1000);
-const expirationTime = now + 900;
 import pako from 'pako';
 
-function generateToken(config) {
+function generateToken(now,expirationTime,config) {
     const privateKeyPath = path.resolve('assets/AuthKey_L698WZ2VD6.p8');
     const privateKey = fs.readFileSync(privateKeyPath, 'utf8');
 
@@ -32,15 +30,14 @@ function generateToken(config) {
         return t;
     } catch (error) {
         console.log("Error:" + error.message);
-    }
-
-   
+    }   
 }
 
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig(event)
-
-    const accessToken = generateToken(config)
+    const now = Math.round(new Date().getTime() / 1000);
+    const expirationTime = now + 900;
+    const accessToken = generateToken(now, expirationTime, config)
     const vendor = "91178647"
 
     var datetime = new Date();
@@ -51,6 +48,14 @@ export default defineEventHandler(async (event) => {
     month = (month - 1 + 11) % 12 + 1;
 
     const previousMonth = `${year}-${String(month).padStart(2, '0')}`;
+    
+
+    const monthNames = [
+        'Jan.', 'FEb.', 'Mär.', 'Apr.', 'Mai', 'Jun.',
+        'Jul.', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dez.'
+    ];
+    const monthString = monthNames[month];
+    
     const printedPreviousMonth = `${String(month).padStart(2, '0')}.${year}`;
 
     const responseLastMonth = await $fetch(`https://api.appstoreconnect.apple.com/v1/salesReports?filter[frequency]=MONTHLY&filter[reportDate]=${previousMonth}&filter[reportSubType]=SUMMARY&filter[reportType]=SALES&filter[vendorNumber]=${vendor}&filter[version]=1_0`, {
@@ -99,8 +104,10 @@ export default defineEventHandler(async (event) => {
     }, []);
 
     return {
-        date: printedPreviousMonth,
-        token: accessToken,
+        date: {
+            month: monthString,
+            year: year
+        },
         apps: resultAppsData
     }
 

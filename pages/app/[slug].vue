@@ -9,20 +9,21 @@
                     <p>{{app.feature.description}}</p>
 
                   
-                    <div class="flex flex-row gap-10 items-center">
-                        <NuxtLink v-if="isNotNullOrUndefined(app.feature.badge.data) && isNotNullOrUndefined(app.feature.appstore)" :to="app.feature.appstore" >
-                           <img 
-                                :src="buildImageUrl(app.feature.badge.data.attributes.url)" 
-                                :alt="`${app.seo.title} im AppStore`"
-                                width="120"
-                                height="40"
-                            />
-                        </NuxtLink>
-
-                         
-                    
-                        <ButtonAppStore v-if="app.feature.titel.includes(`Country`)" app="Country"/>
-                        <ButtonAppStore v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div>
+                            <NuxtLink v-if="isNotNullOrUndefined(app.feature.badge.data) && isNotNullOrUndefined(app.feature.appstore)" :to="app.feature.appstore" >
+                            <img 
+                                    :src="buildImageUrl(app.feature.badge.data.attributes.url)" 
+                                    :alt="`${app.seo.title} im AppStore`"
+                                    width="120"
+                                    height="40"
+                                />
+                            </NuxtLink>
+                        </div>
+                        <div class="flex justify-end sm:justify-start">
+                            <ButtonAppStore v-if="app.feature.titel.includes(`Country`)" app="Country"/>
+                            <ButtonAppStore v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
+                        </div>
                     </div>
                     
                 </div>

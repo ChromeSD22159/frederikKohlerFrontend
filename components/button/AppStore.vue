@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <div class="flex items-center gap-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 stroke-white">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            <p class="m-0" v-if="pending"> <strong>0x</strong> letzten Monat</p>
-            <p class="m-0" v-else> <strong>{{ foundApp.download }}x</strong> letzten Monat</p>
+    <div class="flex items-center gap-3 appstoreBadge">
+
+        <span class="text-2xl fk-colored-text"><strong>{{ foundApp.download }}</strong></span>
+
+        <div class="inner-wrapper">
+            <span class="firstLine">downloads</span>
+            <span class="secondLine">im {{ date.month }}</span>
         </div>
     </div>
 </template>
@@ -15,9 +15,7 @@
         app: { type: String, default: "" }
     });
 
-    const { pending, data: appstore} = useFetch('/api/appstoreconnect', {
-        lazy: true
-    })
+    const { data: appstore } = useFetch('/api/appstoreconnect')
 
     const foundApp = computed(() => {
         if (appstore.value) {
@@ -30,8 +28,36 @@
             return { name: "" , download: "0"};
         }
     });
+
+     const date = computed(() => {
+        if (appstore.value) {
+            return appstore.value.date
+        }  else {
+            return { month: "Monat" , year: "0"};
+        }
+    });
 </script>
 
 <style lang="scss" scoped>
+.appstoreBadge {
+    background: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    max-height: 40px;
 
+    .inner-wrapper {
+        display: flex;
+        flex-direction: column;
+        .firstLine {
+            font-size: 0.5rem;
+            font-weight: 500;
+            line-height: 0.7rem;
+        }
+        .secondLine {
+            font-size: 1.0rem;
+            font-weight: 600;
+            line-height: 0.9rem;
+        }
+    }
+}
 </style>
