@@ -159,7 +159,7 @@ ul.navigation {
    
     const isDevelopment = config.public.INDEXING;
 
-    if (!isDevelopment) {
+    if (isDevelopment === "false") {
         console.log("Meta-Tags noIndex because is Stage")
         const head = document.head || document.getElementsByTagName('head')[0];
 
