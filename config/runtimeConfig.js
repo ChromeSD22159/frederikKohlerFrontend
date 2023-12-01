@@ -9,7 +9,9 @@ export const runtimeConfig = {
   BETTERUPTIMEPAGES: process.env.BETTERUPTIMEPAGES,
   APPSTORE_KEY_ID: process.env.APPSTORE_KEY_ID,
   APPSTORE_ISSUER_ID: process.env.APPSTORE_ISSUER_ID,
+  INDEXING: process.env.INDEXING,
   public: {
     strapi: strapi_url,
+    INDEXING: process.env.INDEXING,
   }
 }

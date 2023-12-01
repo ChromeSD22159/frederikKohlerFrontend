@@ -24,6 +24,9 @@ export default defineNuxtConfig({
   tailwindcss: tailwindcss,
   vite: vite,
   runtimeConfig: runtimeConfig,
+  bridge: {
+    nitro: true
+  },
   hooks: hooks,
   site:{
     url: process.env.NUXT_PUBLIC_SITE_URL,
