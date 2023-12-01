@@ -238,7 +238,7 @@ import { onBeforeMount, onMounted } from "vue";
 
             const appleItunesAppMeta = document.createElement('meta');
             appleItunesAppMeta.name = 'apple-itunes-app';
-            appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=${deepLink}statistic`;
+            appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=test`; // UPDATE WHEN NEW APPVERSION IN APPSTORE ${deepLink}statistic
             head.appendChild(appleItunesAppMeta);
         } 
         
