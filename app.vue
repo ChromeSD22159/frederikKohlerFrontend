@@ -150,4 +150,28 @@ ul.navigation {
       ulActive.value = !ulActive.value;
       showMenu.value = !showMenu.value;
   };
+
+
+
+  const config = useRuntimeConfig()
+
+  const setHeadMeta = () => {
+   
+    const isDevelopment = config.public.INDEXING;
+
+    if (!isDevelopment) {
+        console.log("Meta-Tags noIndex because is Stage")
+        const head = document.head || document.getElementsByTagName('head')[0];
+
+        // Erstellen des Meta-Tags
+        const robotsMeta = document.createElement('meta');
+        robotsMeta.name = 'robots';
+        robotsMeta.content = 'noindex, nofollow';
+        head.appendChild(robotsMeta);
+    } 
+  };
+
+  onMounted(() => setHeadMeta())
+
+  // console.log(process.env.NODE_ENV === 'development') // production
 </script>
