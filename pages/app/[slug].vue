@@ -21,9 +21,13 @@
                             </NuxtLink>
                         </div>
                         <div class="flex justify-end sm:justify-start">
-                            <ButtonAppStore v-if="app.feature.titel.includes(`Country`)" app="Country"/>
-                            <ButtonAppStore v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
+                            <ButtonAppStoreDownloadsTotal v-if="app.feature.titel.includes(`Country`)" app="Country"/>
+                            <ButtonAppStoreDownloadsTotal v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
                         </div>
+                        <!--  <div class="flex justify-start sm:justify-start">
+                            <ButtonAppStoreDownloadsLastMonth v-if="app.feature.titel.includes(`Country`)" app="Country"/>
+                            <ButtonAppStoreDownloadsLastMonth v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
+                        </div> -->
                     </div>
                     
                 </div>
@@ -238,7 +242,7 @@ import { onBeforeMount, onMounted } from "vue";
 
             const appleItunesAppMeta = document.createElement('meta');
             appleItunesAppMeta.name = 'apple-itunes-app';
-            appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=test`; // UPDATE WHEN NEW APPVERSION IN APPSTORE ${deepLink}statistic
+            appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=${deepLink}statistic`;
             head.appendChild(appleItunesAppMeta);
         } 
         
