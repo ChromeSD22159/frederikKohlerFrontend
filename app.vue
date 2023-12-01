@@ -168,6 +168,12 @@ ul.navigation {
         robotsMeta.name = 'robots';
         robotsMeta.content = 'noindex, nofollow';
         head.appendChild(robotsMeta);
+
+        const favIcon = document.createElement('link');
+        favIcon.rel = 'icon';
+        favIcon.type = 'image/x-icon';
+        favIcon.href = '/favicon.ico';
+        head.appendChild(favIcon);
     } 
   };
 
