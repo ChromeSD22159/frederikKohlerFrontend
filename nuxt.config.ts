@@ -12,6 +12,11 @@ import { runtimeConfig } from './config/runtimeConfig';
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  head: {
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
+  },
   vscode: {},
   components: true,
   mode: 'spa', // oder 'spa'
