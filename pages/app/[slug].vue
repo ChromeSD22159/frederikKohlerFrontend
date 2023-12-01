@@ -231,8 +231,6 @@ import { onBeforeMount, onMounted } from "vue";
                 lang: 'de'
             }
         });
-
-         
     });
 
     const setHeadMeta = (appStoreID, deepLink) => {
@@ -245,7 +243,6 @@ import { onBeforeMount, onMounted } from "vue";
             appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=${deepLink}statistic`;
             head.appendChild(appleItunesAppMeta);
         } 
-        
     };
 
     /* Sticky >= large */
