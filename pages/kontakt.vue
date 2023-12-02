@@ -27,6 +27,7 @@
     const loadHead = useHead({
         htmlAttrs: {
             lang: 'de'
-        }
+        },
+        link: [{ rel: 'canonical', href: `https://www.frederikkohler.de${useRoute().fullPath}` }],
     })
 </script>
