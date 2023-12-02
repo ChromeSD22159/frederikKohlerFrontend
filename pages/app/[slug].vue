@@ -219,7 +219,7 @@ import { onBeforeMount, onMounted } from "vue";
                 ogTitle:        `${app.value.seo.title} App von ${app.value.seo.author}`,
                 description:    `${app.value.seo.description}`,
                 ogDescription:  `${app.value.seo.description}`,
-                ogImage:        'https://frederikkohler.de/image.png',
+                //ogImage:        'https://frederikkohler.de/image.png',
                 author:         `${app.value.seo.author}`
             });
             
@@ -229,7 +229,8 @@ import { onBeforeMount, onMounted } from "vue";
         useHead({
             htmlAttrs: {
                 lang: 'de'
-            }
+            },
+            link: [{ rel: 'canonical', href: `https://www.frederikkohler.de${useRoute().fullPath}` }],
         });
     });
 
@@ -266,4 +267,6 @@ import { onBeforeMount, onMounted } from "vue";
         window.removeEventListener('resize', updateViewportWidth);
     });
     /* Sticky >= large */
+
+   
 </script>

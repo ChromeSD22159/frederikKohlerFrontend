@@ -87,9 +87,10 @@
     })
 
     const loadHead = useHead({
-        htmlAttrs: {
+         htmlAttrs: {
             lang: 'de'
-        }
+        },
+        link: [{ rel: 'canonical', href: `https://www.frederikkohler.de${useRoute().fullPath}` }],
     })
     
     /* Sticky >= large */

@@ -168,5 +168,4 @@ ul.navigation {
       ulActive.value = !ulActive.value;
       showMenu.value = !showMenu.value;
   };
-
 </script>
