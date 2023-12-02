@@ -243,6 +243,21 @@ import { onBeforeMount, onMounted } from "vue";
             appleItunesAppMeta.name = 'apple-itunes-app';
             appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=${deepLink}statistic`;
             head.appendChild(appleItunesAppMeta);
+
+            const appleAppDeepLink = document.createElement('meta');
+            appleAppDeepLink.name = 'al:ios:url';
+            appleAppDeepLink.content = `app-id=${appStoreID}, app-argument=${deepLink}statistic`;
+            head.appendChild(appleAppDeepLink);
+
+            const appleAppStoreID = document.createElement('meta');
+            appleAppStoreID.name = 'al:ios:app_store_id';
+            appleAppStoreID.content = `${appStoreID}`;
+            head.appendChild(appleAppStoreID);
+
+            const appleAppStoreName = document.createElement('meta');
+            appleAppStoreName.name = 'al:ios:app_name';
+            appleAppStoreName.content = `${deepLink}`;
+            head.appendChild(appleAppStoreName);
         } 
     };
 

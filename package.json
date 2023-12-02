@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "NODE_ENV=production && nuxt build --dotenv .env.production",
+    "production": "NODE_ENV=production && nuxt build --dotenv .env.production",
     "stage": "NODE_ENV=stage && nuxt build --dotenv .env.stage",
     "dev:host": "npm run dev -- --host",
     "dev": "nuxt dev --hostname --dotenv .env.development",
