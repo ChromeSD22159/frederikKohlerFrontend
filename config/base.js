@@ -3,6 +3,7 @@ export const modules = [
   '@nuxtjs/strapi',
   '@nuxt/image',
   'nuxt-simple-sitemap',
+  'nuxt-simple-robots',
 ]
 
 export const app = {
