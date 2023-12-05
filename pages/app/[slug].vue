@@ -24,10 +24,6 @@
                             <ButtonAppStoreDownloadsTotal v-if="app.feature.titel.includes(`Country`)" app="Country"/>
                             <ButtonAppStoreDownloadsTotal v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
                         </div>
-                        <!--  <div class="flex justify-start sm:justify-start">
-                            <ButtonAppStoreDownloadsLastMonth v-if="app.feature.titel.includes(`Country`)" app="Country"/>
-                            <ButtonAppStoreDownloadsLastMonth v-if="['Amputierte', 'Pro', 'these'].some(str => app.feature.titel.includes(str))" app="Pro"/>
-                        </div> -->
                     </div>
                     
                 </div>
@@ -62,7 +58,7 @@
                     :src="currentImage"
                     loading="lazy"
                     class="image"
-                    alt="history screenshot vom iphone"
+                    :alt="currentImageAlt"
                     style="max-height: 480px"
                     />
                 </Transition>
@@ -107,6 +103,7 @@ import { onBeforeMount, onMounted } from "vue";
     const titelBinding = ref('');
 
     var currentImage = ref("");
+    var currentImageAlt = ref("");
     var currentCard = ref(0);
 
     const buildImageUrl = (url) => `${StrapiUrl}${url}`;
@@ -116,6 +113,7 @@ import { onBeforeMount, onMounted } from "vue";
 
          if (isNotNullOrUndefined(url)) {
             currentImage.value = buildImageUrl(url.data.attributes.url)
+            currentImageAlt.value = url.data.attributes.caption
         }
     };
 
@@ -180,8 +178,10 @@ import { onBeforeMount, onMounted } from "vue";
 
                     if (features.length > 0) {
                         currentImage.value = buildImageUrl(features[0].features[0].image.data.attributes.url)
+                        currentImageAlt.value = features[0].features[0].image.data.attributes.caption
                     } else {
                         currentImage.value = "images/mockImages/screenshot-applewatch.webp"
+                         currentImageAlt.value = "Frederik Kohler"
                     }
 
                     const transformedData = {
@@ -242,7 +242,26 @@ import { onBeforeMount, onMounted } from "vue";
             const appleItunesAppMeta = document.createElement('meta');
             appleItunesAppMeta.name = 'apple-itunes-app';
             appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=${deepLink}statistic`;
-            head.appendChild(appleItunesAppMeta);
+            const viewportMeta = document.querySelector('meta[name="viewport"]').nextSibling;
+            head.insertBefore(appleItunesAppMeta, viewportMeta);
+
+            const el1 = document.querySelector('meta[name="apple-itunes-app"]').nextSibling;
+            const appleAppDeepLink = document.createElement('meta');
+            appleAppDeepLink.name = 'al:ios:url';
+            appleAppDeepLink.content = `${deepLink}statistic`;
+            head.insertBefore(appleAppDeepLink, el1);
+
+            const el2 = document.querySelector('meta[name="al:ios:url"]').nextSibling;
+            const appleAppStoreID = document.createElement('meta');
+            appleAppStoreID.name = 'al:ios:app_store_id';
+            appleAppStoreID.content = `${appStoreID}`;
+            head.insertBefore(appleAppStoreID, el2);
+
+            const el3 = document.querySelector('meta[name="al:ios:app_store_id"]').nextSibling;
+            const appleAppStoreName = document.createElement('meta');
+            appleAppStoreName.name = 'al:ios:app_name';
+            appleAppStoreName.content = `${deepLink}`;
+            head.insertBefore(appleAppStoreName, el3);
         } 
     };
 

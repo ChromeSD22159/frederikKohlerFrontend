@@ -20,6 +20,9 @@ export default defineNuxtConfig({
   css: css,
   modules: modules,
   plugins: plugins,
+  robots: {
+    mergeWithRobotsTxtPath: process.env.NODE_ENV === "production" ? 'assets/robots/robots.txt' : 'assets/robots/robots-stage.txt'
+  },
   strapi: strapi_url,
   tailwindcss: tailwindcss,
   vite: vite,
