@@ -14,8 +14,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   vscode: {},
   components: true,
-  mode: 'spa', // oder 'spa'
-  ssr: false,
+  mode: 'spa',
+  ssr: true,
   app: app,
   css: css,
   modules: modules,

@@ -13,11 +13,11 @@
                         <div>
                             <NuxtLink v-if="isNotNullOrUndefined(app.feature.badge.data) && isNotNullOrUndefined(app.feature.appstore)" :to="app.feature.appstore" >
                             <img 
-                                    :src="buildImageUrl(app.feature.badge.data.attributes.url)" 
-                                    :alt="`${app.seo.title} im AppStore`"
-                                    width="120"
-                                    height="40"
-                                />
+                                :src="buildImageUrl(app.feature.badge.data.attributes.url)" 
+                                :alt="`${app.seo.title} im AppStore`"
+                                width="120"
+                                height="40"
+                            />
                             </NuxtLink>
                         </div>
                         <div class="flex justify-end sm:justify-start">
@@ -59,8 +59,8 @@
                     loading="lazy"
                     class="image"
                     :alt="currentImageAlt"
-                    style="max-height: 480px"
                     />
+                     <!-- style="max-height: 480px" -->
                 </Transition>
 
                 <PageFoot />
@@ -95,15 +95,16 @@
 }
 </style>
 
-<script setup> // http://192.168.0.227:1337/api/apps?populate=seo&filters[localizations][slug]=pro-prothese
+<script setup> 
 import { onBeforeMount, onMounted } from "vue";
 
     const router = useRouter();
     const StrapiUrl = useStrapiMedia()    
-    const titelBinding = ref('');
+    const { findOne } = useStrapi();
+    const { slug } = useRoute().params;
 
-    var currentImage = ref("");
-    var currentImageAlt = ref("");
+    var currentImage = ref("images/mockImages/screenshot-applewatch.webp");
+    var currentImageAlt = ref("Frederik Alt Text");
     var currentCard = ref(0);
 
     const buildImageUrl = (url) => `${StrapiUrl}${url}`;
@@ -116,10 +117,6 @@ import { onBeforeMount, onMounted } from "vue";
             currentImageAlt.value = url.data.attributes.caption
         }
     };
-
-    /*  */
-    const { findOne } = useStrapi();
-    const { slug } = useRoute().params;
 
     const { data: app } = await useAsyncData(`${slug}-appdata`, async () => {
         try {
@@ -176,14 +173,6 @@ import { onBeforeMount, onMounted } from "vue";
                         return localizedData.attributes
                     }).flat();
 
-                    if (features.length > 0) {
-                        currentImage.value = buildImageUrl(features[0].features[0].image.data.attributes.url)
-                        currentImageAlt.value = features[0].features[0].image.data.attributes.caption
-                    } else {
-                        currentImage.value = "images/mockImages/screenshot-applewatch.webp"
-                         currentImageAlt.value = "Frederik Kohler"
-                    }
-
                     const transformedData = {
                         seo: seo.length > 0 ? seo[0] : null,
                         feature: features.length > 0 ? features[0] : null,
@@ -205,87 +194,55 @@ import { onBeforeMount, onMounted } from "vue";
             console.error('Fehler bei der Datenabfrage:', err);
             throw err;
         }
-
     })
-    /*  */
 
-    onMounted(() => {
-        const inputString = router.currentRoute.value.params.slug.replace(/_/g, ' ');
-        titelBinding.value = inputString.replace(/\b\w/g, (match) => match.toUpperCase());
-
-        if (app.value && app.value.seo) {
-            useSeoMeta({
-                title:          `${app.value.seo.title} App von ${app.value.seo.author}`,
-                ogTitle:        `${app.value.seo.title} App von ${app.value.seo.author}`,
-                description:    `${app.value.seo.description}`,
-                ogDescription:  `${app.value.seo.description}`,
-                //ogImage:        'https://frederikkohler.de/image.png',
-                author:         `${app.value.seo.author}`
-            });
-            
-            setHeadMeta(app.value.other.appStoreID, app.value.other.deepLink);
-        }
-
-        useHead({
-            htmlAttrs: {
-                lang: 'de'
-            },
-            link: [{ rel: 'canonical', href: `https://www.frederikkohler.de${useRoute().fullPath}` }],
-        });
+    const head = useHead({
+        htmlAttrs: {
+            lang: 'de'
+        },
+        link: [{ rel: 'canonical', href: `https://www.frederikkohler.de${useRoute().fullPath}` }],
+        meta: [
+            { name: 'apple-itunes-app', content: `app-id=${app.value.other.appStoreID}, app-argument=${app.value.other.deepLink}statistic` },
+            { name: 'al:ios:url', content: `${app.value.other.deepLink}statistic` },
+            { name: 'al:ios:app_name', content: `${app.value.other.deepLink}` },
+            { name: 'al:ios:app_store_id', content: `${app.value.other.appStoreID}` },
+        ]
     });
 
-    const setHeadMeta = (appStoreID, deepLink) => {
-        
-        if (appStoreID && deepLink) {
-            const head = document.head || document.getElementsByTagName('head')[0];
+    const seo =  useSeoMeta({
+        title:          `${app.value.seo.title} App von ${app.value.seo.author}`,
+        ogTitle:        `${app.value.seo.title} App von ${app.value.seo.author}`,
+        description:    `${app.value.seo.description}`,
+        ogDescription:  `${app.value.seo.description}`,
+        //ogImage:        'https://frederikkohler.de/image.png',
+        author:         `${app.value.seo.author}`
+    });
 
-            const appleItunesAppMeta = document.createElement('meta');
-            appleItunesAppMeta.name = 'apple-itunes-app';
-            appleItunesAppMeta.content = `app-id=${appStoreID}, app-argument=${deepLink}statistic`;
-            const viewportMeta = document.querySelector('meta[name="viewport"]').nextSibling;
-            head.insertBefore(appleItunesAppMeta, viewportMeta);
 
-            const el1 = document.querySelector('meta[name="apple-itunes-app"]').nextSibling;
-            const appleAppDeepLink = document.createElement('meta');
-            appleAppDeepLink.name = 'al:ios:url';
-            appleAppDeepLink.content = `${deepLink}statistic`;
-            head.insertBefore(appleAppDeepLink, el1);
-
-            const el2 = document.querySelector('meta[name="al:ios:url"]').nextSibling;
-            const appleAppStoreID = document.createElement('meta');
-            appleAppStoreID.name = 'al:ios:app_store_id';
-            appleAppStoreID.content = `${appStoreID}`;
-            head.insertBefore(appleAppStoreID, el2);
-
-            const el3 = document.querySelector('meta[name="al:ios:app_store_id"]').nextSibling;
-            const appleAppStoreName = document.createElement('meta');
-            appleAppStoreName.name = 'al:ios:app_name';
-            appleAppStoreName.content = `${deepLink}`;
-            head.insertBefore(appleAppStoreName, el3);
-        } 
-    };
-
-    /* Sticky >= large */
-    const viewportWidth = ref(window.innerWidth || document.documentElement.clientWidth);
-    const viewportHeight = ref(window.innerHeight || document.documentElement.clientHeight);
+    const viewportWidth = ref(0);
+    const viewportHeight = ref(0);
     const isMobileViewport = ref(viewportWidth.value <= 1024);
     const contentHeight = ref(null);
     const isContentBiggerAsViewport = ref(isContentHeigherAsViewport(getElementSize(contentHeight), viewportHeight.value));
 
-    const updateViewportWidth = () => {
+    const updateViewportWidth = (window) => {
         viewportWidth.value = window.innerWidth || document.documentElement.clientWidth;
         isMobileViewport.value = viewportWidth.value <= 1024;
         isContentBiggerAsViewport.value = isContentHeigherAsViewport(getElementSize(contentHeight).height, window.innerHeight || document.documentElement.clientHeight)
     };
 
+    watchEffect(() => {
+        if (app.value && app.value.feature && app.value.feature.features && app.value.feature.features.length > 0) {
+            const url = app.value.feature.features[0].image.data.attributes.url;
+            changeImage(0, { data: { attributes: { url } } });
+        }
+    });
+
     onMounted(() => {
-        window.addEventListener('resize', updateViewportWidth);
+        window.addEventListener('resize', updateViewportWidth(window));
     });
 
     onBeforeUnmount(() => {
-        window.removeEventListener('resize', updateViewportWidth);
+        window.removeEventListener('resize', updateViewportWidth(window));
     });
-    /* Sticky >= large */
-
-   
 </script>
