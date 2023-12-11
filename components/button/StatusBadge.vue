@@ -1,27 +1,30 @@
 <template>
     <div>
-        <div v-if="state !== null && size == 'small'" :class="[ 'status-small', state.aggregate_state ]">
-            <NuxtLink to="https://status.frederikkohler.de" target="_blank">
-                <div class="status-icon" :title="`All servers are ${transformStatusForOverlay(state.aggregate_state)}`">
-                    <div class="status-icon-inner">
-                        <span>{{ transformStatusForOverlay(state.aggregate_state).charAt(0).toUpperCase() }}</span>
-                    </div>
-                    <div class="status-icon-wave"></div>
-                    <div class="status-icon-wave-light"></div>
+        <ButtonStatusContextMenu>
+            <template #btn>
+                <div v-if="state !== null && size == 'small'" :class="[ 'status-small', state.aggregate_state ]">
+                     <div class="status-icon" :title="`${transformStatusDE(state.aggregate_state)}`">
+                            <div class="status-icon-inner">
+                                <span>{{ transformStatusForOverlay(state.aggregate_state).charAt(0).toUpperCase() }}</span>
+                            </div>
+                            <div class="status-icon-wave"></div>
+                            <div class="status-icon-wave-light"></div>
+                        </div>
                 </div>
-            </NuxtLink>
-        </div>
 
-        <div v-if="state !== null && size == 'large'" :class="[ 'status-large', state.aggregate_state ]">
-            <NuxtLink to="https://status.frederikkohler.de" target="_blank">
-                <div class="status-icon" :title="`Some services are ${ transformStatusForOverlay(state.aggregate_state) }`"> 
-                    <div class="status-icon-inner"></div>
-                    <div class="status-icon-wave"></div>
-                    <div class="status-icon-wave-light"></div>
+                <div v-if="state !== null && size == 'large'" :class="[ 'status-large', state.aggregate_state ]">
+                    <div class="status-icon" :title="`Some services are ${ transformStatusForOverlay(state.aggregate_state) }`"> 
+                        <div class="status-icon-inner"></div>
+                        <div class="status-icon-wave"></div>
+                        <div class="status-icon-wave-light"></div>
+                    </div>
+                    <p>Status: {{ transformStatusWord(state.aggregate_state) }}</p>
                 </div>
-                <p>Status: {{ transformStatusWord(state.aggregate_state) }}</p> 
-            </NuxtLink>
-        </div>
+            </template>
+
+            <template v-slot:titel>Statusübersicht</template>
+            <template v-slot:context>{{ transformStatusDE(state.aggregate_state) }}</template>
+        </ButtonStatusContextMenu>
     </div>
 </template>
 
@@ -45,6 +48,20 @@ const transformStatusWord = (word) => {
       return 'Down';
     case 'degraded':
       return 'Degraded';
+    default:
+      return word;
+  }
+}
+
+const transformStatusDE = (word) => {
+  const lowerCaseWord = word.toLowerCase();
+  switch (lowerCaseWord) {
+    case 'operational':
+      return 'Alle Diensten sind Online!';
+    case 'downtime':
+      return 'Einigen Diensten sind nicht Verfügbar!';
+    case 'degraded':
+      return 'Einige Dienste sind beeinträchtigt';
     default:
       return word;
   }
@@ -91,7 +108,7 @@ const transformStatusForOverlay = (word) => {
             background-color: var(--status-color);
             opacity: 0;
             animation: wave 1500ms ease-in-out infinite;
-            z-index: 0;
+            z-index: 6;
         }
          &-wave-light {
             width: inherit;
@@ -101,7 +118,7 @@ const transformStatusForOverlay = (word) => {
             opacity: 0;
             animation: wave-light 1500ms ease-in-out infinite;
             animation-delay: 300ms;
-            z-index: 0;
+            z-index: 6;
         }
         &-inner {
             width: 1rem;
