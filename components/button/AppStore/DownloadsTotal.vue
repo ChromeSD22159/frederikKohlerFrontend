@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center gap-3 appstoreBadge">
 
-        <span class="text-2xl fk-colored-text"><strong>{{ formatNumber(foundApp.count) }}</strong></span>
+        <span class="text-2xl fk-colored-text"><strong class="counter">0</strong></span>
 
         <div class="inner-wrapper">
             <span class="firstLine uppercase">Total</span>
@@ -15,41 +15,74 @@
         app: { type: String, default: "" }
     });
 
+    let AnimationCount = 0
+
+    const AnimationDuration = 700
+    const AnimationInterval =100
+
     const { data: appstore } = useFetch('https://api.frederikkohler.de/api/app-store-connect?populate=*')
 
     const foundApp = computed(() => {
-        if (appstore.value) {
-            const app = appstore.value.data.attributes.app.filter((app) => app.name.includes(props.app))
-
-            if (app[0]) {
-                return app[0]
-            }
-        }  else {
-            return { name: "" , download: "0"};
+        if (!appstore.value || !appstore.value.data.attributes.app) {
+            return { name: "", download: "0" };
         }
 
-        if (Object.keys(appstore.data).length === 0) {
-           return { "id": 1, "__component": "global.app-store-connect", "name": "Name", "count": 0 }
-        } else {
-             const app = appstore.data.attributes.app.filter((app) => app.name.includes(props.app))
-             console.log(app[0])
-             if (app[0]) {
-                return app[0]
-            }
-            console.log('Das Objekt ist nicht leer.');
-        }
+        const app = appstore.value.data.attributes.app.find(app => app.name.includes(props.app));
+
+        return app || { name: "", download: "0" };
     });
 
-   function formatNumber(num) {
-    if (num >= 0 && num < 1000) {
-        return num.toString();
-    } else if (num >= 1000 && num < 1000000) {
-        const formattedNum = (num / 1000).toFixed(1);
-        return `${formattedNum}k`;
-    } else {
-        return 'N/A';
+    let counterStartValue;
+
+    const updateCounter = (num, durationCount, intervalCount) => {
+        const K = 1000;
+        const M = K * K;
+        const B = M * K;
+        const T = B * K;
+
+        const formatDownloadCount = downloads => {
+            if (downloads < K) return downloads.toString();
+            if (downloads < M) return (downloads / K).toFixed(1) + 'k';
+            if (downloads < B) return (downloads / M).toFixed(0) + 'Mio';
+            if (downloads < T) return (downloads / B).toFixed(0) + 'Mrd';
+            return '1t+';
+        };
+
+        const startValue = '1'.repeat(num.toString().length);
+        const parsedStartValue = parseInt(startValue);
+
+        counterStartValue.innerHTML = formatDownloadCount(startValue);
+
+        const countUp = () => {
+            const randomNumber = Math.floor(Math.random() * (num - parsedStartValue + 1) + parsedStartValue);
+            counterStartValue.innerHTML = formatDownloadCount(randomNumber);
+        };
+
+        let interval = setInterval(countUp, intervalCount);
+
+        setTimeout(() => {
+            clearInterval(interval);
+            counterStartValue.innerHTML = formatDownloadCount(num);
+        }, durationCount);
     }
-    }
+
+    onMounted(() => {
+        counterStartValue = document.querySelector(".counter");
+
+        const appstoreBadgeObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && AnimationCount === 0) {
+                    updateCounter(foundApp.value.count, AnimationDuration, AnimationInterval);
+                    AnimationCount++
+                }
+            });
+        }, { rootMargin: "0px" });
+
+        const appstoreBadges = document.querySelectorAll(".appstoreBadge");
+        appstoreBadges.forEach(appstoreBadge => appstoreBadgeObserver.observe(appstoreBadge));
+    });
+
+    onUnmounted(() => AnimationCount = 0)
 </script>
 
 <style lang="scss" scoped>
@@ -75,5 +108,3 @@
     }
 }
 </style>
-
-

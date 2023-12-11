@@ -38,6 +38,10 @@
     import { defineProps, defineAsyncComponent } from 'vue';
     
     const StrapiUrl = useStrapiUrl()
+    const { findOne } = useStrapi();
+    const { slug } = useRoute().params;
+    const viewportWidth = ref(0);
+    const isMobileViewport = ref(viewportWidth.value <= 1024);
 
     const { data: socialMedias } = await useAsyncData('social-medias', () => $fetch(StrapiUrl + '/social-medias?populate[socialMedia][populate]=*'), {
         transform: (data: any) => {
@@ -52,9 +56,6 @@
 
         }
     })
-
-    const { findOne } = useStrapi();
-    const { slug } = useRoute().params;
 
     const { data: site } = await useAsyncData('page', 
         () => findOne('pages', { 
@@ -74,36 +75,32 @@
         }
     )
 
-    /* load data */
     const loadComponent = (componentName: string) => defineAsyncComponent(() => import(`@/components/section/${componentName}.vue`));
-
-    const loadSeoMeta = useSeoMeta({
-        title: 'Freiberuflicher Web Designer & Software Entwickler',
-        ogTitle: 'Freiberuflicher Web Designer & Software Entwickler',
-        description: 'Suchen Sie Entwickler, UX/IX-Designer oder Hilfe bei Websites? Brauchen Sie Unterstützung bei Software Projekten oder bei Ihrer Website?',
-        ogDescription: 'Suchen Sie Entwickler, UX/IX-Designer oder Hilfe bei Websites? Brauchen Sie Unterstützung bei Software Projekten oder bei Ihrer Website?',
-        ogImage: 'https://frederikkohler.de/image.png',
-        author: 'Frederik Kohler, Portfolio'
-    })
-
-    const loadHead = useHead({
-         htmlAttrs: {
-            lang: 'de'
-        },
-        link: [{ rel: 'canonical', href: `https://www.frederikkohler.de${useRoute().fullPath}` }],
-    })
-    
-    /* Sticky >= large */
-    const viewportWidth = ref(window.innerWidth || document.documentElement.clientWidth);
-    const isMobileViewport = ref(viewportWidth.value <= 1024);
-    
-    const updateViewportWidth = () => {
+   
+    const updateViewportWidth = (window) => {
         viewportWidth.value = window.innerWidth || document.documentElement.clientWidth;
         isMobileViewport.value = viewportWidth.value <= 1024;
     };
 
     onMounted(() => {
-    updateViewportWidth();
+        updateViewportWidth(window);
+
+        const loadSeoMeta = useSeoMeta({
+            title: 'Freiberuflicher Web Designer & Software Entwickler',
+            ogTitle: 'Freiberuflicher Web Designer & Software Entwickler',
+            description: 'Suchen Sie Entwickler, UX/IX-Designer oder Hilfe bei Websites? Brauchen Sie Unterstützung bei Software Projekten oder bei Ihrer Website?',
+            ogDescription: 'Suchen Sie Entwickler, UX/IX-Designer oder Hilfe bei Websites? Brauchen Sie Unterstützung bei Software Projekten oder bei Ihrer Website?',
+            ogImage: 'https://frederikkohler.de/image.png',
+            author: 'Frederik Kohler, Portfolio'
+        })
+
+        const loadHead = useHead({
+            htmlAttrs: {
+                lang: 'de'
+            },
+            link: [{ rel: 'canonical', href: `https://www.frederikkohler.de${useRoute().fullPath}` }],
+        })
+
         window.addEventListener('resize', updateViewportWidth);
     });
 

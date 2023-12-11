@@ -38,16 +38,17 @@
     secondarySticky: { type: Boolean, default: false }
   })
 
-    const viewportWidth = ref(window.innerWidth || document.documentElement.clientWidth);
-    const isMobileViewport = ref(viewportWidth.value <= 1024);
+  const viewportWidth = ref(0);
+  const isMobileViewport = ref(viewportWidth.value <= 1024);
     
-    const updateViewportWidth = () => {
-        viewportWidth.value = window.innerWidth || document.documentElement.clientWidth;
-        isMobileViewport.value = viewportWidth.value <= 1024;
-    };
+  const updateViewportWidth = (window) => {
+      viewportWidth.value = window.innerWidth || document.documentElement.clientWidth;
+      isMobileViewport.value = viewportWidth.value <= 1024;
+  };
 
     onMounted(() => {
-        window.addEventListener('resize', updateViewportWidth);
+      let w = window
+        w.addEventListener('resize', updateViewportWidth(window));
     });
 
     onBeforeUnmount(() => {

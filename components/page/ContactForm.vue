@@ -99,28 +99,6 @@
 
                 
             } catch (e) { console.log(e) }
-
-            /*await create('emailss', form.value)
-                .then(() => {
-                    error.value = false;
-                    success.value = true;
-                    checked.value = false;
-                    resetForm()
-                }).catch((error) => {
-                    error.value = true;
-                    success.value = false;
-                    checked.value = false;
-                    buttonPosition.value = 0
-                    
-                    this.$router.push(`/error/${error.statusCode}`);
-                    
-                    throw createError({
-                        statusCode: error.statusCode,
-                        statusMessage: error.statusMessage
-                    })
-                    
-                
-                }) */
         }
     };
 
