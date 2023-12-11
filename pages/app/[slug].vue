@@ -3,10 +3,11 @@
     <NuxtLayout name="multi-row" :primarySticky="false" :secondarySticky="true">
         <template v-slot:primary>
              <div class="flex flex-col flex-1 mx-auto gap-10" ref="contentHeight">
+                <!-- Intro / Hero -->
                 <div class="flex flex-col gap-2">
                     <h1 class="text-xl md:text-xl xl:text-3xl line-break fk-colored-text antialiased tracking-wide font-sans"> {{ app.feature.titel }} </h1>
                     <h2 class="text-sm md:text-md xl:text-xl line-break text-gray-500 antialiased tracking-wide font-sans"> {{ app.feature.subtitle }} </h2>
-                    <p>{{app.feature.description}}</p>
+                    <p>{{ app.feature.description }}</p>
 
                   
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -27,7 +28,9 @@
                     </div>
                     
                 </div>
+                <!-- Intro / Hero end -->
 
+                <!-- Cards -->
                 <div 
                     v-if="app.feature && app.feature.features && app.feature.features.length > 0" 
                     :class="{ 'flex': true, 'flex-col': true, 'gap-5': true, 'mb-10': isMobileViewport || isContentBiggerAsViewport }"
@@ -42,6 +45,7 @@
                     </div>
                     
                 </div>
+                <!-- Cards -->
 
                 <PageFoot v-if="isMobileViewport"/>
             </div>
@@ -123,37 +127,39 @@ import { onBeforeMount, onMounted } from "vue";
             const data = await findOne('apps', { 
                     filters: {
                         localizations: {
-                            slug: slug,
-                        }
+                            slug: {
+                                $eq: slug
+                            },
+                        },
                     },
                     fields: ['name', 'slug'],
                     populate: {
                         localizations: {
-                        fields: ['name', 'slug', 'appStoreID', 'deepLink'],
-                        populate: {
-                            seo: {
-                                fields: ['title', 'description', 'author'],
-                            },
-                            features: {
-                                fields: ['titel','subtitle', 'description', 'appstore'],
-                                populate: {
-                                    features: {
-                                        fields: ['titel', 'text'],
-                                        populate: {
-                                            icon: {
-                                                fields: ['name', 'alternativeText', 'caption', 'url'],
+                            fields: ['name', 'slug', 'appStoreID', 'deepLink'],
+                            populate: {
+                                seo: {
+                                    fields: ['title', 'description', 'author'],
+                                },
+                                features: {
+                                    fields: ['titel','subtitle', 'description', 'appstore'],
+                                    populate: {
+                                        features: {
+                                            fields: ['titel', 'text'],
+                                            populate: {
+                                                icon: {
+                                                    fields: ['name', 'alternativeText', 'caption', 'url'],
+                                                },
+                                                image: {
+                                                    fields: ['name', 'alternativeText', 'caption', 'url'],
+                                                }
                                             },
-                                            image: {
-                                                fields: ['name', 'alternativeText', 'caption', 'url'],
-                                            }
                                         },
-                                    },
-                                    badge: {
-                                        fields: ['name', 'alternativeText', 'url'],
+                                        badge: {
+                                            fields: ['name', 'alternativeText', 'url'],
+                                        }
                                     }
                                 }
-                            }
-                        },
+                            },
                         },
                     },
             })

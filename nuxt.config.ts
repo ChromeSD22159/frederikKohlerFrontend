@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   vscode: {},
   components: true,
-  mode: 'spa',
+  mode: 'universal',
   ssr: true,
   app: app,
   css: css,
@@ -40,7 +40,7 @@ export default defineNuxtConfig({
     fallback: true,
   },
   routeRules: {
-    '/': { prerender: true },
+    '/**': { swr: 86400 },
     '/error/**': { index: false },
   },
   render: {
