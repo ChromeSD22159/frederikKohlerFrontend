@@ -40,7 +40,7 @@ export default defineNuxtConfig({
     fallback: true,
   },
   routeRules: {
-    '/**': { swr: 86400 },
+    '/*': { swr: 60, cache: { maxAge: 60 } },
     '/error/**': { index: false },
   },
   render: {
