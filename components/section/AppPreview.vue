@@ -7,11 +7,11 @@
 
         <div v-for="(app, index) in content.apps" :key="app.id" :ref="`animateCta${index}`" :class="['flex', 'flex-col', 'mx-auto', 'gap-5', 'mx-auto']">
             <NuxtLink :to="`/app/${app.name.toLowerCase().replaceAll(' ', '-')}`" class="flex flex-col gap-7">
-               <div>
+                <div>
                     <h3 class="text-xl md:text-xl xl:text-3xl line-break fk-colored-text antialiased tracking-wide font-sans">{{ app.name }}</h3>
                     <h4 class="text-sm antialiased tracking-wide font-sans text-accent">{{ app.subline }}</h4>
                 </div>
-                <ImageWithHover :image="app.image" :alt="app.subline" />
+              <ImageWithHover :image="app.image" :alt="app.subline" />
             </NuxtLink>
                 <p class="antialiased">{{ app.description }}</p>
 
@@ -20,21 +20,6 @@
                         <ButtonCollection :link=link />
                     </li>
                 </ul>
-            
-
-            <!-- test  -->
-            <!-- <div class="cta-button left-0 bottom-0" ref="ctaButton">
-                <div class="cta-button-wrapper">
-                    <a class="cta-button-text" ref="ctaButtonText">{{ app.name }}</a>
-                    <div class="icon-wrapper" ref="iconWrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"  stroke-width="1.5" stroke="white" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                        </svg>
-                    </div>
-                </div>
-            </div> -->
-            <!--  -->
-
         </div>
     </div>
 </template>
@@ -45,62 +30,6 @@
         socialMedias: { type: Object, default: () => {} },
         fullSize: { type: Boolean, default: () => false },
     });
-
-    /* 
-    import gsap from 'gsap';
-    import { ScrollTrigger } from 'gsap/ScrollTrigger'
-    import { Draggable } from 'gsap/Draggable'
-
-    gsap.registerPlugin(ScrollTrigger)
-
-    const animateCta = ref(null);
-    const ctaButton = ref(null);
-    const ctaButtonText = ref(null)
-    const iconWrapper = ref(null)
-    const duration = "0.35";
-    const delay = "0.3";
-
-    let ctx, tl;
-    onMounted(() => {
-        console.log(animateCta.value, tl)
-        tl = gsap.timeline({
-             scrollTrigger: {
-                trigger: animateCta.value,
-                start: "0% 80%",
-                end: "80% 10%",
-                toggleActions: "play none none reverse",
-                markers:false
-            },
-            smoothChildTiming: true
-        });
-
-        tl.set(ctaButtonText.value, {
-            padding: "0 1rem 0 1rem",
-            opacity: 1,
-            
-            delay: 0.5,
-            duration: duration
-        }, "bounce")
-
-         tl.to(ctaButtonText.value, {
-            padding: "0",
-            opacity: 0,
-            width: "auto",
-            duration: duration
-        }, "bounce")
-
-        tl.set(ctaButton.value, {
-            width: "0",
-            duration: duration
-        }, "scale")
-
-        tl.to(ctaButton.value, {
-            opacity: 1,
-            scale: 1,
-            duration: duration
-        }, "scale")
-    })
-    */
 </script>
 
 <style lang="scss" scoped>

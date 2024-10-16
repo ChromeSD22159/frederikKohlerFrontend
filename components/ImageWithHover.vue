@@ -36,7 +36,7 @@
   })
 
   const imageURL = computed(() => {
-      return StrapiMediaUrl + props.image.data.attributes.formats.medium.url
+      return StrapiMediaUrl + props.image.data.attributes.formats.small.url
   })
 
    const imageAlt = computed(() => {

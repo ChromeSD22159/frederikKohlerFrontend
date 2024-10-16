@@ -33,7 +33,7 @@ export default defineNuxtConfig({
   hooks: hooks,
   site:{
     url: process.env.NUXT_PUBLIC_SITE_URL,
-    cacheMaxAgeSeconds: 360, // 1 hour
+    //cacheMaxAgeSeconds: 360, // 1 hour
   },
   sitemap: sitemap,
   generate: {

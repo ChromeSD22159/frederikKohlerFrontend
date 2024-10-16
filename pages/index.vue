@@ -2,14 +2,15 @@
     <div>
         <NuxtLayout name="multi-row" :primarySticky="true" :secondarySticky="false">
             <template v-slot:primary> <!-- primary slot  -->
-                <div v-for="primaryData in site.primary" :key="primaryData.id" :component=primaryData.component > 
+
+                <div v-for="primaryData in site.primary" :key="primaryData.id" :component=primaryData.component >
                     <component :is="loadComponent(primaryData.component)" :content="primaryData" :socialMedias="socialMedias" fullSize=""/>
                 </div>
             </template>
             
             <template v-slot:secondary> <!--  secondary slot  -->
                 <div v-if="site.secondary !== null"> 
-                    <div v-for="secondaryData in site.secondary" :key="secondaryData.id" :component=secondaryData.component> 
+                    <div v-for="secondaryData in site.secondary" :key="secondaryData.id" :component=secondaryData.component>
                         <component :is="loadComponent(secondaryData.component)" :content="secondaryData" :socialMedias="socialMedias" fullSize=""/>
                     </div>
 
@@ -109,3 +110,19 @@
     });
     /* Sticky >= large */
 </script>
+
+/* ALT
+Als Mediengestalter digital und print sowie erfahrener iOS- und Webentwickler habe ich fünf umfassende Apps entwickelt und erfolgreich im App Store veröffentlicht. Meine Expertise erstreckt sich über die Zusammenarbeit in agilen Teams, die Integration verschiedener Methoden und Designmuster sowie die Implementierung sowohl nativer als auch Drittanbieter-Frameworks.
+
+Neben meiner Rolle als Entwickler war ich maßgeblich an der Konzeption von Geschäftsmodellen beteiligt, habe ansprechendes UI/UX-Design umgesetzt und die Erstellung von RESTful-APIs sowie SQL-Abfragen gemeistert. Mit drei Apps im App Store und umfassender Erfahrung in Technologien wie WordPress, Nuxt, Strapi und Tailwind stehe ich für kreative Lösungen und innovative Entwicklung.
+
+Deine Projekte: Lassen Sie uns gemeinsam Ihre Vision Wirklichkeit werden lassen. Von der ersten Idee über das Design bis hin zur technischen Umsetzung stehe ich Ihnen als erfahrener Partner zur Seite.
+*/
+
+
+/* NEU
+
+Als erfahrener Fullstack- und Mobile Developer habe ich bereits mehrere Apps erfolgreich im Google Play Store und Apple App Store veröffentlicht. Meine Expertise reicht von der Entwicklung nativer Apps bis hin zur Integration von Backend-Systemen und RESTful APIs. Ich arbeite regelmäßig in agilen Teams und nutze moderne Designmuster, um ansprechende Benutzeroberflächen und leistungsstarke Anwendungen zu entwickeln.
+
+Gemeinsam können wir Ihre Ideen von der Konzeption bis zur technischen Umsetzung realisieren. Mit meiner Erfahrung stehe ich Ihnen als zuverlässiger Partner für die Entwicklung innovativer digitaler Lösungen zur Seite.
+*/

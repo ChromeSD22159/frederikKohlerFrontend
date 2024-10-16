@@ -8,6 +8,7 @@
             <IconDownload v-if="iconName == 'download'" />
             <IconPhone v-if="iconName == 'phone'" />
             <IconInstagram v-if="iconName == 'instagram'" />
+            <IconLinkedIn v-if="iconName == 'linkedin'" />
             <p class="text-white text-xs text-center">{{ link.text }}</p>
         </NuxtLink>
     </div>
@@ -17,7 +18,7 @@
     .fk-card {
          background: $bg_dark;
          transition: all ease-in-out 0.3s;
-        
+
         a > * {
             transition: all ease-in-out 0.4s;
             fill: $accent;
@@ -55,6 +56,7 @@ export default {
             case 'download': return 'download'
             case 'phone': return 'phone'
             case 'instagram': return 'instagram'
+            case 'linkedin': return 'linkedin'
             default: return 'null'
         }
         // https://icon-sets.iconify.design/ph/phone/
